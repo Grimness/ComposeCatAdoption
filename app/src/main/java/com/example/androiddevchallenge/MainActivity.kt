@@ -17,30 +17,52 @@ package com.example.androiddevchallenge
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.Crossfade
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.androiddevchallenge.ui.DetailsScreen
+import com.example.androiddevchallenge.ui.HomeScreen
+import com.example.androiddevchallenge.ui.Screen
 import com.example.androiddevchallenge.ui.theme.MyTheme
+import com.example.androiddevchallenge.viewmodel.NavViewModel
 
 class MainActivity : AppCompatActivity() {
+
+    val viewModel by viewModels<NavViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MyTheme {
-                MyApp()
+                MyApp(viewModel)
             }
+        }
+    }
+
+    override fun onBackPressed() {
+        if (!viewModel.onBack()) {
+            super.onBackPressed()
         }
     }
 }
 
 // Start building your app here!
 @Composable
-fun MyApp() {
-    Surface(color = MaterialTheme.colors.background) {
-        Text(text = "Ready... Set... GO!")
+fun MyApp(viewModel: NavViewModel) {
+    val curScreen by viewModel.curScreen.observeAsState(Screen.HomeScreen)
+    Crossfade(curScreen) {
+        Surface(color = MaterialTheme.colors.background) {
+            when(curScreen) {
+                is Screen.HomeScreen -> HomeScreen(viewModel)
+                is Screen.DetailsScreen -> DetailsScreen((curScreen as Screen.DetailsScreen).puppy)
+            }
+        }
     }
 }
 
@@ -48,7 +70,7 @@ fun MyApp() {
 @Composable
 fun LightPreview() {
     MyTheme {
-        MyApp()
+        MyApp(viewModel = NavViewModel())
     }
 }
 
@@ -56,6 +78,6 @@ fun LightPreview() {
 @Composable
 fun DarkPreview() {
     MyTheme(darkTheme = true) {
-        MyApp()
+        MyApp(viewModel = NavViewModel())
     }
 }
