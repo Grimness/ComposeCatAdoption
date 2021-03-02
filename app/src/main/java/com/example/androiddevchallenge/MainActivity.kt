@@ -34,7 +34,7 @@ import com.example.androiddevchallenge.viewmodel.NavViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    val viewModel by viewModels<NavViewModel>()
+    private val viewModel by viewModels<NavViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +58,7 @@ fun MyApp(viewModel: NavViewModel) {
     val curScreen by viewModel.curScreen.observeAsState(Screen.HomeScreen)
     Crossfade(curScreen) {
         Surface(color = MaterialTheme.colors.background) {
-            when(curScreen) {
+            when (curScreen) {
                 is Screen.HomeScreen -> HomeScreen(viewModel)
                 is Screen.DetailsScreen -> DetailsScreen((curScreen as Screen.DetailsScreen).puppy)
             }
