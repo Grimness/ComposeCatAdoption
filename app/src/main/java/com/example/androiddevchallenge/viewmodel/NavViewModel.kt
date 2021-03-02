@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.androiddevchallenge.data.Puppy
 import com.example.androiddevchallenge.ui.Screen
 
-class NavViewModel: ViewModel() {
+class NavViewModel : ViewModel() {
 
     private val _screen = MutableLiveData<Screen>(Screen.HomeScreen)
 
