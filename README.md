@@ -7,12 +7,13 @@
 
 ## :scroll: Description
 <!--- Describe your app in one or two sentences -->
-
+本来想写猫的,但是找不到数据源
+领养小狗
 
 ## :bulb: Motivation and Context
 <!--- Optionally point readers to interesting parts of your submission. -->
 <!--- What are you especially proud of? -->
-
+ ### 学习了 Compose 编写 UI
 
 ## :camera_flash: Screenshots
 <!-- You can add more screenshots here if you like -->
